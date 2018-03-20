@@ -6,18 +6,19 @@ import javax.persistence.*;
 @Entity
 @NamedQueries({
         @NamedQuery(name = "User.findByOrder",
-                query = "SELECT u FROM user u WHERE u.modelType.order = :order"),
+                query = "SELECT u FROM user u WHERE u.order = :order"),
         @NamedQuery(name = "User.findById",
-                query = "SELECT u FROM user u WHERE u.modelType.id = :id"),
+                query = "SELECT u FROM user u WHERE u.id = :id"),
         @NamedQuery(name = "User.findByEmail",
-                query = "SELECT u FROM user u WHERE u.modelType.email = :email"),
+                query = "SELECT u FROM user u WHERE u.email = :email"),
         @NamedQuery(name = "User.findByRating",
-                query = "SELECT u FROM u WHERE u.modelType.averageRating = :averageRating")
+                query = "SELECT u FROM u WHERE u.averageRating = :averageRating")
 })
 @Table(name = "user")
 public class User {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "email")
