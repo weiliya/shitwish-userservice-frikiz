@@ -31,25 +31,16 @@ public class UserService {
     public boolean validateUser(String email, String password) {
         List<User> users = userRepository.findAll();
         for (User user : users) {
-            if (user.getName() != email) users.remove(user);
+            if (user.getEmail() != email) users.remove(user);
         }
         if (Password.checkPassword(password, users.get(0).getPassword())) return true;
         return false;
     }
 
-    public String getUserIdByUserName(String email) {
-        return userRepository.findByEmail(email).getId().toString();
+    public User getUser(Long userId) {
+        return userRepository.findOne(userId);
     }
 
-    public User getUserByEmail(String email) {
-        return  userRepository.findByEmail(email);
 
-    }
-
-    public void updateUserById(String userId, String email) {
-        User user = userRepository.findOne(Long.valueOf(userId));
-        user.setEmail(email);
-        userRepository.save(user);
-    }
 
 }

@@ -1,5 +1,6 @@
 package com.codecool.shitwish.api;
 
+import com.codecool.shitwish.model.User;
 import com.codecool.shitwish.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -23,25 +24,42 @@ public class UserServiceREST {
 
     @PostMapping("/logUser")
     public String insertToSession(Model model, @RequestParam("email") String email, HttpSession session) {
-        session.setAttribute("email", email);
-        // String userId = userService.getUserIdByUserName(name);
-        //session.setAttribute("userId", userId);
-        return "redirect:";
+        String userId = userService.getUser(Long.valueOf(session.getAttribute("userId")).getId());
+        if (userService.loginUser(userId, session.getAttribute("password")) != null) {
+            session.setAttribute("email", email);
+            session.setAttribute("userId", userId);
+           return "redirect:/";
+        } else {
+            model.addAttribute("Login", "Wrong email or password");
+            return "redirect:/";
+        }
     }
+
+    @PostMapping("/logUser")
+    public String loginUser(Model model,@RequestParam("email") String email, HttpSession session ) {
+        if ( userService.loginUser(session.getAttribute("password"))
+
+    }
+
 
     @PostMapping("/regUser")
     public String saveUser(Model model, @RequestParam("password") String psw, @RequestParam("email") String email) {
         model.addAttribute("title", "Login");
         String password = Password.hashPassword(psw);
-        //userService.saveUser(name, psw,email);
-        return "";
+        if  (userService.validateUser(email, password)) {
+            userService.saveUser(email, psw);
+            return "";
+        } else {
+            model.addAttribute("validate", "Already exists a user with this email address");
+            return "redirect:/";
+        }
     }
 
     @PostMapping("/getUser/{userId}")
-    public String updateUser(Model model, @PathVariable String userId) {
-        model.addAttribute("email", userService.getUserEmail(userId));
-        model.addAttribute("balance", userService.getBalance(userId));
-        //userService.updateUserById(userId, editName, editedEmail);
+    public String getUser(Model model, @PathVariable Long userId) {
+        User user = userService.getUser(userId);
+        model.addAttribute("email", user.getEmail());
+        model.addAttribute("balance", user.getBalance());
         return "redirect:/";
     }
 
