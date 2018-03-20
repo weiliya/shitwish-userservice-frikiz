@@ -20,8 +20,8 @@ public class UserServiceREST {
 
     @PostMapping("/logUser")
     public JSONObject insertToSession(Model model, @RequestParam("email") String email, HttpSession session) {
-        String userId = userService.getUser(Long.valueOf(session.getAttribute("userId")).getId());
-        if (userService.loginUser(userId, session.getAttribute("password")) != null) {
+        Long userId = userService.getUser(Long.valueOf(session.getAttribute("userId").toString())).getId();
+        if (userService.loginUser(userId, session.getAttribute("password").toString()) != null) {
             session.setAttribute("email", email);
             session.setAttribute("userId", userId);
             JSONObject object = new JSONObject()
@@ -63,7 +63,7 @@ public class UserServiceREST {
                     .put("email", user.getEmail())
                     .put("id", user.getId())
                     .put("order", user.getOrder())
-                    .put("rating", user.getAvarageRating())
+                    .put("rating", user.getAverageRating())
                     .put("status", HttpStatus.OK);
             return object;
         } else {
