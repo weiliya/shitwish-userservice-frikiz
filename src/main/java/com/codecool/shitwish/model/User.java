@@ -4,27 +4,18 @@ package com.codecool.shitwish.model;
 import javax.persistence.*;
 
 @Entity
-@NamedQueries({
-        @NamedQuery(name = "User.findByOrder",
-                query = "SELECT u FROM user u  WHERE u.modelType.order = :order"),
-        @NamedQuery(name = "User.findById",
-                query = "SELECT u FROM user u WHERE u.modelType.id = :id"),
-        @NamedQuery(name = "User.findByEmail",
-                query = "SELECT u FROM user u WHERE u.modelType.email = :email"),
-        @NamedQuery(name = "User.findByRating",
-                query = "SELECT u FROM u WHERE u.modelType.averageRating = :averageRating")
-})
 @Table(name = "user")
 public class User {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "email")
     private String email;
 
     private String password;
-    private Order order;
+    private Long orderId;
 
     @Column(name = "averageRating")
     private Long averageRating;
@@ -59,12 +50,12 @@ public class User {
         this.password = password;
     }
 
-    public Order getOrder() {
-        return order;
+    public Long getOrder() {
+        return orderId;
     }
 
-    public void setOrder(Order order) {
-        this.order = order;
+    public void setOrder(Long orderId   ) {
+        this.orderId = orderId;
     }
 
     public Long getAverageRating() {
