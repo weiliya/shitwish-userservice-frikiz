@@ -30,11 +30,11 @@ public class UserService {
 
     public boolean validateUser(String email, String password) {
         List<User> users = userRepository.findAll();
+        boolean validation = false;
         for (User user : users) {
-            if (user.getEmail() != email) users.remove(user);
+            if (user.getEmail() != email) validation = true;
         }
-        if (Password.checkPassword(password, users.get(0).getPassword())) return true;
-        return false;
+        return validation;
     }
 
     public User getUser(Long userId) {
