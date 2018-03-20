@@ -58,7 +58,7 @@ public class UserServiceREST {
     @PostMapping("/getUser/{userId}")
     public JSONObject getUser(Model model, @PathVariable Long userId) {
         User user = userService.getUser(userId);
-        if (userService.getAllUser().contains(user)) {
+        if (userService.getAll().contains(user)) {
             JSONObject object = new JSONObject()
                     .put("email", user.getEmail())
                     .put("id", user.getId())
@@ -71,7 +71,7 @@ public class UserServiceREST {
                     .put("status", HttpStatus.NOT_FOUND);
             return object;
         }
-       
+
     }
 
     @GetMapping("/logout")

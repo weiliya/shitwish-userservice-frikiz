@@ -37,6 +37,10 @@ public class UserService {
         return validation;
     }
 
+    public List<User> getAll() {
+        return userRepository.findAll();
+    }
+
     public User getUser(Long userId) {
         return userRepository.findOne(userId);
     }
