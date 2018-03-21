@@ -73,7 +73,7 @@ public class UserServiceREST {
     }
 
     @GetMapping("/getUser/{userId}")
-    public ResponseEntity<JSONObject> getUser(Model model, @PathVariable Long userId) {
+    public ResponseEntity getUser(Model model, @PathVariable Long userId) {
         JSONObject responseObject = new JSONObject();
         User user = userService.getUser(userId);
         if (userService.getAll().contains(user)) {
@@ -82,10 +82,10 @@ public class UserServiceREST {
             responseObject.put("order", user.getOrder());
             responseObject.put("rating", user.getAverageRating());
             responseObject.put("status", HttpStatus.OK);
-            return new ResponseEntity<JSONObject>(responseObject, HttpStatus.OK);
+            return new ResponseEntity<>(responseObject.toString(), HttpStatus.OK);
         } else {
             responseObject.put("message", "Didnt find user with this Id");
-            return new ResponseEntity<JSONObject>(responseObject, HttpStatus.CONFLICT);
+            return new ResponseEntity<>(responseObject.toString(), HttpStatus.CONFLICT);
         }
     }
 
