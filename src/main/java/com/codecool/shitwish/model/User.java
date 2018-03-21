@@ -15,10 +15,13 @@ public class User {
     private String email;
 
     private String password;
+
     private Long orderId;
 
     @Column(name = "averageRating")
     private Long averageRating;
+
+    public User() {}
 
     public User(String email, String password) {
         this.email = email;

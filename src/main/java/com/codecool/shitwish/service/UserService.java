@@ -15,9 +15,6 @@ public class UserService {
     private UserRepository userRepository;
 
 
-    public void add(User user) {
-        userRepository.save(user);
-    }
 
     public User find(Long id) {
         return userRepository.findOne(id);
@@ -66,6 +63,5 @@ public class UserService {
     public User getUser(Long userId) {
         return userRepository.findOne(userId);
     }
-
 
 }
