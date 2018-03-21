@@ -33,12 +33,10 @@ public class UserServiceREST {
             object.put("userId", userId);
             return new ResponseEntity(HttpStatus.OK);
         } else {
-            object.put("status", HttpStatus.NOT_FOUND);
             object.put("message", "Cant find a user with this email address");
             return new ResponseEntity(HttpStatus.CONFLICT);
         }
     }
-
 
     @PostMapping("/user/regUser")
     public ResponseEntity saveUser(Model model) {
@@ -86,7 +84,7 @@ public class UserServiceREST {
             responseObject.put("status", HttpStatus.OK);
             return responseObject;
         } else {
-            responseObject.put("message", "Didnt find user with this Id");
+            responseObject.put("message", "Didn't find user with this Id");
             return responseObject;
         }
     }

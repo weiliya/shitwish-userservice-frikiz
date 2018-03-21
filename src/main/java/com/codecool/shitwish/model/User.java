@@ -4,11 +4,11 @@ package com.codecool.shitwish.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "email")
@@ -19,7 +19,6 @@ public class User {
 
     @Column(name = "averageRating")
     private Long averageRating;
-
 
     public User(String email, String password) {
         this.email = email;
