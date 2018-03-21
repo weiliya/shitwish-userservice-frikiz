@@ -47,7 +47,7 @@ public class UserService {
         return null;
     }
 
-    public boolean validateUser(String email, String password) {
+    public boolean validateUser(String email) {
         List<User> users = userRepository.findAll();
         boolean validation = false;
         for (User user : users) {

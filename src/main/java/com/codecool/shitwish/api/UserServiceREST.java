@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.*;
 import org.springframework.ui.Model;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import com.codecool.shitwish.model.Password;
 import org.springframework.web.client.HttpClientErrorException;
@@ -17,7 +15,6 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.security.PermitAll;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.net.URI;
 
@@ -44,11 +41,14 @@ public class UserServiceREST {
     }
 
     @PostMapping("/user/reg-user")
-    public ResponseEntity<HttpStatus> saveUser(@RequestBody String email, @RequestBody String password) {
-        System.out.println(email);
-        System.out.println(password);
-        return new ResponseEntity<>(HttpStatus.OK);
-
+    public ResponseEntity<String> saveUser(@RequestParam("email") String email, @RequestParam("password") String password) {
+        String psw = Password.hashPassword(password);
+        if  (userService.validateUser(email)) {
+            userService.saveUser(psw, email);
+            return new ResponseEntity("registered user",HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
     }
 
     @GetMapping("/get-user/{userId}")
