@@ -18,8 +18,7 @@ public class UserServiceREST {
     @Autowired
     UserService userService;
 
-    @PostMapping("/user/log-user")
-    @ResponseBody
+    @RequestMapping(value = "/user/log-user", method = RequestMethod.POST)
     public ResponseEntity logUser(@RequestParam("email") String email, @RequestParam("password") String password) {
         User user = userService.findByEmail(email);
         Gson gson = new Gson();
@@ -34,7 +33,7 @@ public class UserServiceREST {
         }
     }
 
-    @PostMapping("/user/reg-user")
+    @RequestMapping(value = "/user/reg-user", method = RequestMethod.POST)
     public ResponseEntity saveUser(@RequestParam("email") String email, @RequestParam("password") String password) {
         String psw = Password.hashPassword(password);
         Gson gson = new Gson();
