@@ -14,7 +14,9 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
 
     public User find(Long id) {
         return userRepository.findOne(id);
@@ -47,7 +49,7 @@ public class UserService {
         return null;
     }
 
-    public boolean validateUser(String email, String password) {
+    public boolean validateUser(String email) {
         List<User> users = userRepository.findAll();
         boolean validation = false;
         for (User user : users) {
