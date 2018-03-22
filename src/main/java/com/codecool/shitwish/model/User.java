@@ -16,12 +16,8 @@ public class User {
 
     private String password;
 
-    private Long orderId;
-
-    @Column(name = "averageRating")
-    private Long averageRating;
-
-    public User() {}
+    public User() {
+    }
 
     public User(String email, String password) {
         this.email = email;
@@ -52,19 +48,4 @@ public class User {
         this.password = password;
     }
 
-    public Long getOrder() {
-        return orderId;
-    }
-
-    public void setOrder(Long orderId   ) {
-        this.orderId = orderId;
-    }
-
-    public Long getAverageRating() {
-        return averageRating;
-    }
-
-    public void setAverageRating(Long averageRating) {
-        this.averageRating = averageRating;
-    }
 }
