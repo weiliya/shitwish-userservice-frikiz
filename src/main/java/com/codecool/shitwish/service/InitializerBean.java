@@ -9,7 +9,7 @@ public class InitializerBean {
 
 
     public InitializerBean(UserService userService) {
-        userService.saveUser("vm", "j");
-        userService.saveUser("ccc", "m");
+        userService.saveUser("kalap", "gomb@a.hu");
+        userService.saveUser("banan", "ana@nasz.hu");
     }
 }

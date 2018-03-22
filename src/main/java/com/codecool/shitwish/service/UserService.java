@@ -37,7 +37,7 @@ public class UserService {
     }
 
     public void saveUser(String password, String email) {
-        User user = new User(email,password);
+        User user = new User(email, password);
         userRepository.save(user);
     }
 
@@ -50,12 +50,11 @@ public class UserService {
     }
 
     public boolean validateUser(String email) {
-        List<User> users = userRepository.findAll();
-        boolean validation = false;
-        for (User user : users) {
-            if (user.getEmail() != email) validation = true;
+        User user = findByEmail(email);
+        if (user != null) {
+            return true;
         }
-        return validation;
+        return false;
     }
 
     public List<User> getAll() {
