@@ -4,8 +4,9 @@ import com.codecool.shitwish.model.Password;
 import com.codecool.shitwish.model.User;
 import com.codecool.shitwish.service.UserService;
 import com.google.gson.Gson;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,47 +19,45 @@ public class UserServiceREST {
     UserService userService;
 
     @PostMapping("/user/log-user")
-    public String logUser(@RequestParam("email") String email, @RequestParam("password") String password) {
+    @ResponseBody
+    public ResponseEntity logUser(@RequestParam("email") String email, @RequestParam("password") String password) {
         User user = userService.findByEmail(email);
         Gson gson = new Gson();
-        JSONObject object = new JSONObject();
         try {
             if (userService.loginUser(user.getId(), user.getPassword()) != null) {
-                object.put("email", user.getEmail());
-                object.put("userId", user.getId());
-                return gson.toJson(object);
+                return new ResponseEntity(gson.toJson(user), HttpStatus.OK);
             } else {
-                return "failed";
+                return new ResponseEntity("failure", HttpStatus.BAD_REQUEST);
             }
         } catch (HTTPException e) {
-            return "unexpected";
+            return new ResponseEntity("unexpected", HttpStatus.BAD_REQUEST);
         }
     }
 
     @PostMapping("/user/reg-user")
-    public String saveUser(@RequestParam("email") String email, @RequestParam("password") String password) {
+    public ResponseEntity saveUser(@RequestParam("email") String email, @RequestParam("password") String password) {
         String psw = Password.hashPassword(password);
         Gson gson = new Gson();
         try {
             if (!userService.validateUser(email)) {
                 userService.saveUser(psw, email);
-                return "success";
+                return new ResponseEntity("success", HttpStatus.OK);
             } else {
-                return "exists";
+                return new ResponseEntity("failed", HttpStatus.OK);
             }
         } catch (HTTPException e) {
-            return "unexpected";
+            return new ResponseEntity("unexpected", HttpStatus.OK);
         }
     }
 
     @GetMapping("/user/get-user/{userId}")
-    public String getUser(Model model, @PathVariable Long userId) {
+    public ResponseEntity getUser(Model model, @PathVariable Long userId) {
         Gson gson = new Gson();
         User user = userService.getUser(userId);
         if (userService.getAll().contains(user)) {
-            return gson.toJson(user);
+            return new ResponseEntity(gson.toJson(user), HttpStatus.OK);
         } else {
-            return gson.toJson("failure");
+            return  new ResponseEntity(gson.toJson("failure"), HttpStatus.OK);
         }
     }
 
