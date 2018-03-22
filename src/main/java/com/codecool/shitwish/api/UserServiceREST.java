@@ -48,8 +48,6 @@ public class UserServiceREST {
         if (userService.getAll().contains(user)) {
             responseObject.put("email", user.getEmail());
             responseObject.put("id", user.getId());
-            responseObject.put("order", user.getOrder());
-            responseObject.put("rating", user.getAverageRating());
             responseObject.put("status", HttpStatus.OK);
             return new ResponseEntity<>(responseObject.toString(), HttpStatus.OK);
         } else {
