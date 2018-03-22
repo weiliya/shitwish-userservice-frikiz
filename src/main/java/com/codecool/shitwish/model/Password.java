@@ -3,7 +3,6 @@ package com.codecool.shitwish.model;
 import org.mindrot.jbcrypt.BCrypt;
 
 
-
 public class Password {
     // Define the BCrypt workload to use when generating password hashes. 10-31 is a valid value.
     private static int workload = 12;
@@ -32,18 +31,19 @@ public class Password {
      * This method can be used to verify a computed hash from a plaintext (e.g. during a userLogin
      * request) with that of a stored hash from a database. The password hash from the database
      * must be passed as the second variable.
+     *
      * @param password_plaintext The account's plaintext password, as provided during a userLogin request
-     * @param stored_hash The account's stored password hash, retrieved from the authorization database
+     * @param stored_hash        The account's stored password hash, retrieved from the authorization database
      * @return boolean - true if the password matches the password of the stored hash, false otherwise
      */
     public static boolean checkPassword(String password_plaintext, String stored_hash) {
         boolean password_verified = false;
 
-        if(null == stored_hash || !stored_hash.startsWith("$2a$"))
+        if (null == stored_hash || !stored_hash.startsWith("$2a$"))
             throw new IllegalArgumentException("Invalid hash provided for comparison");
 
         password_verified = BCrypt.checkpw(password_plaintext, stored_hash);
 
-        return(password_verified);
+        return (password_verified);
     }
 }
